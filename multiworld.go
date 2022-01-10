@@ -25,6 +25,7 @@ func New(server *server.Server, logger *logrus.Logger) *WorldManager {
 		worlds: map[string]*world.World{
 			defaultWorld.Name(): defaultWorld,
 		},
+		server: server,
 	}
 }
 func (mw *WorldManager) Worlds() []*world.World {
