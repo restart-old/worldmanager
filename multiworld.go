@@ -47,6 +47,7 @@ func (mw *WorldManager) World(name string) (*world.World, bool) {
 func (mw *WorldManager) DefaultWorld() *world.World { return mw.server.World() }
 
 func (mw *WorldManager) LoadWorld(worldPath string, settings *world.Settings, dimension world.Dimension) error {
+	name := settings.Name
 	if _, ok := mw.World(settings.Name); ok {
 		return fmt.Errorf("world manager: world with name '%s' is already loaded", settings.Name)
 	}
@@ -59,7 +60,7 @@ func (mw *WorldManager) LoadWorld(worldPath string, settings *world.Settings, di
 
 	mw.worldsMu.Lock()
 	defer mw.worldsMu.Unlock()
-	mw.worlds[settings.Name] = w
+	mw.worlds[name] = w
 	return nil
 }
 
