@@ -14,7 +14,7 @@ type WorldManager struct {
 	server *server.Server
 	logger *logrus.Logger
 
-	worlds   map[string]*world.World
+	worlds   map[string]*World
 	worldsMu sync.RWMutex
 }
 
@@ -22,22 +22,22 @@ func New(server *server.Server, logger *logrus.Logger) *WorldManager {
 	defaultWorld := server.World()
 	return &WorldManager{
 		logger: logger,
-		worlds: map[string]*world.World{
-			defaultWorld.Name(): defaultWorld,
+		worlds: map[string]*World{
+			defaultWorld.Name(): NewWorld(defaultWorld, defaultWorld.Name()),
 		},
 		server: server,
 	}
 }
-func (mw *WorldManager) Worlds() []*world.World {
+func (mw *WorldManager) Worlds() []*World {
 	mw.worldsMu.RLock()
-	worlds := make([]*world.World, 0, len(mw.worlds))
+	worlds := make([]*World, 0, len(mw.worlds))
 	for _, w := range mw.worlds {
 		worlds = append(worlds, w)
 	}
 	mw.worldsMu.RUnlock()
 	return worlds
 }
-func (mw *WorldManager) World(name string) (*world.World, bool) {
+func (mw *WorldManager) World(name string) (*World, bool) {
 	mw.worldsMu.RLock()
 	w, ok := mw.worlds[name]
 	mw.worldsMu.RUnlock()
@@ -60,14 +60,14 @@ func (mw *WorldManager) LoadWorld(worldPath string, settings *world.Settings, di
 
 	mw.worldsMu.Lock()
 	defer mw.worldsMu.Unlock()
-	mw.worlds[name] = w
+	mw.worlds[name] = NewWorld(w, name)
 	return nil
 }
 
 func (mw *WorldManager) Close() error {
 	mw.worldsMu.Lock()
 	for _, w := range mw.worlds {
-		if w != mw.DefaultWorld() {
+		if w.World != mw.DefaultWorld() {
 			mw.logger.Debugf("Closing world '%s'\n", w.Name())
 			if err := w.Close(); err != nil {
 				return err
