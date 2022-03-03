@@ -2,6 +2,7 @@ package worldmanager
 
 import (
 	"fmt"
+	"github.com/df-mc/goleveldb/leveldb/opt"
 	"sync"
 
 	"github.com/df-mc/dragonfly/server"
@@ -52,7 +53,7 @@ func (mw *WorldManager) LoadWorld(worldPath string, settings *world.Settings, di
 		return fmt.Errorf("world manager: world with name '%s' is already loaded", settings.Name)
 	}
 	w := world.New(mw.logger, dimension, settings)
-	p, err := mcdb.New(worldPath, dimension)
+	p, err := mcdb.New(worldPath, dimension, opt.DefaultCompression)
 	if err != nil {
 		return fmt.Errorf("world manager: %s", err)
 	}

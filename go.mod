@@ -3,7 +3,7 @@ module github.com/df-plus/worldmanager
 go 1.17
 
 require (
-	github.com/df-mc/dragonfly v0.5.2-0.20220108220621-5a51ed6d4919
+	github.com/df-mc/dragonfly v0.5.2-0.20220301165743-b6bef7622793
 	github.com/sirupsen/logrus v1.8.1
 )
 
@@ -17,8 +17,9 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/muhammadmuzzammil1998/jsonc v0.0.0-20201229145248-615b0916ca38 // indirect
+	github.com/pelletier/go-toml v1.9.3 // indirect
 	github.com/sandertv/go-raknet v1.10.2 // indirect
-	github.com/sandertv/gophertunnel v1.18.1 // indirect
+	github.com/sandertv/gophertunnel v1.19.1 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
 	golang.org/x/image v0.0.0-20210628002857-a66eb6448b8d // indirect
